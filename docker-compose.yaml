@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    image: stylegan3-vj/app:latest
+    container_name: app
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      - BACKEND_PORT=60080
+    ports:
+      - 60001:60001
+    networks:
+      st_fastapi_net:
+        aliases:
+          - front.docker
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: stylegan3-vj/backend:latest
+    container_name: backend
+    runtime: nvidia
+    shm_size: '2gb'
+    restart: unless-stopped
+    ports:
+      - 60080:60080
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - ./backend:/app
+    networks:
+      st_fastapi_net:
+        aliases:
+          - backend.docker
+
+networks:
+  st_fastapi_net:
+    driver: bridge
