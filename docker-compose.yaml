@@ -31,8 +31,8 @@ services:
       - 60080:60080
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
-    volumes:
-      - ./backend:/app
+    # volumes:
+    #   - ./backend:/app
     networks:
       st_fastapi_net:
         aliases:

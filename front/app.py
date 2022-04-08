@@ -22,12 +22,12 @@ BACKEND_PORT = os.environ.get('BACKEND_PORT')
 st.title('StyleGAN3-VJ App')
 st.text("AI that generate audio reactive movies")
 
-image_files = st.file_uploader('Target audio file',
+audio_files = st.file_uploader('Target audio file',
                                type=['wav', 'mp3'],
                                accept_multiple_files=True)
 
-if len(image_files) > 0 and st.button('Submit'):
-    files = [('files', file) for file in image_files]
+if len(audio_files) > 0 and st.button('Submit'):
+    files = [('files', file) for file in audio_files]
 
     r = httpx.post(f'http://backend.docker:{BACKEND_PORT}/predict', files=files)
     st.success(r.json())

@@ -24,7 +24,7 @@ RUN pip install poetry \
     && poetry config virtualenvs.create false \
     && poetry install
 
-# COPY . /app/
+COPY . /app/
 
 EXPOSE 60080
 
